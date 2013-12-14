@@ -9,14 +9,15 @@
     "url"  : "https://github.com/lazutkin/ho-interval.git"
   },
   "scripts": {
-    "test" : "mocha --compilers coffee:coffee-script --reporter spec tests/*"
+    "test" : "./node_modules/mocha/bin/mocha --compilers coffee:coffee-script --reporter spec tests/*"
   },
   "dependencies" : {
     "coffee-script" : "*",
     "underscore"    : "*"
   },
   "devDependencies": {
-    "chai" : "1.8.x"
+    "mocha" : "1.12.x",
+    "chai"  : "1.8.x"
   }
 }
 
