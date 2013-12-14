@@ -16,7 +16,6 @@
     "underscore"    : "*"
   },
   "devDependencies": {
-    "coffee-script": "*"
     "chai" : "1.8.x"
   }
 }

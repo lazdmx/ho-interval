@@ -3,7 +3,10 @@ _ = require "underscore"
 class exports.HOInterval
   @clone: ( int ) -> new HOInterval int.a, int.b
   @length: ( int ) -> int.b - int.a
-  @isValid: ( x, y ) -> x < y and 0 <= x
+  @isValid: ( x, y ) -> x < y
+
+  @unite: ( a, b ) -> HOInterval.clone( a ).unite( b )
+  @intersect: ( a, b ) -> HOInterval.clone( a ).intersect( b )
 
   @toGaps: ( ints ) ->
     return [ ] if ints?.length < 2
@@ -19,13 +22,14 @@ class exports.HOInterval
 
   constructor: ( @a, @b ) ->
 
+  isCloseTo: ( other ) -> ( @b is other.a ) or ( @a is other.b )
+  isEqualsTo: ( other ) -> ( @a is other.a ) and ( @b is other.b )
+
   isIntersect: ( x, y ) ->
     if x instanceof HOInterval
       y = x.b
       x = x.a
     return @a <= x < @b or x < @a < y
-
-  isCloseTo: ( other ) -> ( @b is other.a ) or ( @a is other.b )
 
   unite: ( other ) ->
     return @ unless @isIntersect( other ) or @isCloseTo( other )
@@ -36,12 +40,13 @@ class exports.HOInterval
     @
 
   intersect: ( other ) ->
-    throw new Error( ) unless @isIntersect( other )
+    throw @ unless @isIntersect( other )
     maxA = _.max [ @a, other.a ]
     minB = _.min [ @b, other.b ]
     @a = maxA
     @b = minB
     @
+
 
   add: ( val ) ->
     @a += val
