@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/lazutkin/ho-interval.png)](https://travis-ci.org/lazutkin/ho-interval)
+
 ho-interval
 ===========
 
