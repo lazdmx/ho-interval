@@ -117,3 +117,68 @@ describe "HOInterval#unite", ->
     expect( cInt.a ).to.be.equals 1
     expect( cInt.b ).to.be.equals 9
 
+
+describe "HOInterval#uniteAll", ->
+  it "should unite #1", ->
+    ints = [
+      new HOI 1, 3
+      new HOI 2, 4
+      new HOI 3, 5
+    ]
+
+    ints = HOI.uniteAll ints
+    expect( ints ).to.have.length 1
+    expect( ints[ 0 ].a ).to.be.equals 1
+    expect( ints[ 0 ].b ).to.be.equals 5
+
+
+  it "should unite #2", ->
+    ints = [ ]
+    ints = HOI.uniteAll ints
+    expect( ints ).to.have.length 0
+
+
+  it "should unite #3", ->
+    ints = [ new HOI 1, 3 ]
+
+    ints = HOI.uniteAll ints
+    expect( ints ).to.have.length 1
+    expect( ints[ 0 ].a ).to.be.equals 1
+    expect( ints[ 0 ].b ).to.be.equals 3
+
+  it "should unite #4", ->
+    ints = [
+      new HOI 1, 3
+      new HOI 3, 5
+    ]
+
+    ints = HOI.uniteAll ints
+    expect( ints ).to.have.length 1
+    expect( ints[ 0 ].a ).to.be.equals 1
+    expect( ints[ 0 ].b ).to.be.equals 5
+
+  it "should unite #5", ->
+    ints = [
+      new HOI 1, 3
+      new HOI 4, 6
+    ]
+
+    ints = HOI.uniteAll ints
+    expect( ints ).to.have.length 2
+    expect( ints[ 0 ].a ).to.be.equals 1
+    expect( ints[ 0 ].b ).to.be.equals 3
+    expect( ints[ 1 ].a ).to.be.equals 4
+    expect( ints[ 1 ].b ).to.be.equals 6
+
+  it "should unite #6", ->
+    ints = [
+      new HOI 1, 3
+      new HOI 4, 6
+      new HOI 0, 6
+    ]
+
+    ints = HOI.uniteAll ints
+    expect( ints ).to.have.length 1
+    expect( ints[ 0 ].a ).to.be.equals 0
+    expect( ints[ 0 ].b ).to.be.equals 6
+
