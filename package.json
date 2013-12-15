@@ -1,7 +1,7 @@
 {
   "name"         : "ho-interval",
   "description"  : "A half-open interval object",
-  "version"      : "0.0.2",
+  "version"      : "0.0.3",
   "author"       : "Dmitry Lazutkin <ldm.thread@gmail.com>",
   "maintainer"   : "Dmitry Lazutkin <ldm.thread@gmail.com>",
   "repository"   : {

@@ -1,11 +1,29 @@
 _ = require "underscore"
 
+__unite = ( ints ) ->
+  united = [ ]
+  for x, idx1 in ints when not _.contains united, idx1
+    for idx2 in [ idx1 + 1 ... ints.length ] when not _.contains united, idx2
+      y = ints[ idx2 ]
+      if x.isIntersect( y ) or x.isCloseTo( y )
+        x.unite y
+        united.push idx2
+  united
+    
+
+
 class exports.HOInterval
   @clone: ( int ) -> new HOInterval int.a, int.b
   @length: ( int ) -> int.b - int.a
   @isValid: ( x, y ) -> x < y
 
   @unite: ( a, b ) -> HOInterval.clone( a ).unite( b )
+
+  @uniteAll: ( ints ) ->
+    while ( united = __unite ints ) and not _.isEmpty united
+      ints.splice idx, 1 for idx in united.sort( ).reverse( )
+    ints
+
   @intersect: ( a, b ) -> HOInterval.clone( a ).intersect( b )
 
   @toGaps: ( ints ) ->
