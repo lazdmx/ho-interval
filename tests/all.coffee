@@ -105,20 +105,6 @@ describe "HOInterval#intersect", ->
 
 
 describe "HOInterval#unite", ->
-  it "should unite two intervals", ->
-    aInt = new HOI 1, 5
-    bInt = new HOI 4, 9
-    cInt = HOI.unite aInt, bInt
-
-    expect( aInt.a ).to.be.equals 1
-    expect( aInt.b ).to.be.equals 5
-    expect( bInt.a ).to.be.equals 4
-    expect( bInt.b ).to.be.equals 9
-    expect( cInt.a ).to.be.equals 1
-    expect( cInt.b ).to.be.equals 9
-
-
-describe "HOInterval#uniteAll", ->
   it "should unite #1", ->
     ints = [
       new HOI 1, 3
@@ -126,7 +112,7 @@ describe "HOInterval#uniteAll", ->
       new HOI 3, 5
     ]
 
-    ints = HOI.uniteAll ints
+    ints = HOI.unite ints
     expect( ints ).to.have.length 1
     expect( ints[ 0 ].a ).to.be.equals 1
     expect( ints[ 0 ].b ).to.be.equals 5
@@ -134,14 +120,14 @@ describe "HOInterval#uniteAll", ->
 
   it "should unite #2", ->
     ints = [ ]
-    ints = HOI.uniteAll ints
+    ints = HOI.unite ints
     expect( ints ).to.have.length 0
 
 
   it "should unite #3", ->
     ints = [ new HOI 1, 3 ]
 
-    ints = HOI.uniteAll ints
+    ints = HOI.unite ints
     expect( ints ).to.have.length 1
     expect( ints[ 0 ].a ).to.be.equals 1
     expect( ints[ 0 ].b ).to.be.equals 3
@@ -152,7 +138,7 @@ describe "HOInterval#uniteAll", ->
       new HOI 3, 5
     ]
 
-    ints = HOI.uniteAll ints
+    ints = HOI.unite ints
     expect( ints ).to.have.length 1
     expect( ints[ 0 ].a ).to.be.equals 1
     expect( ints[ 0 ].b ).to.be.equals 5
@@ -163,7 +149,7 @@ describe "HOInterval#uniteAll", ->
       new HOI 4, 6
     ]
 
-    ints = HOI.uniteAll ints
+    ints = HOI.unite ints
     expect( ints ).to.have.length 2
     expect( ints[ 0 ].a ).to.be.equals 1
     expect( ints[ 0 ].b ).to.be.equals 3
@@ -177,8 +163,29 @@ describe "HOInterval#uniteAll", ->
       new HOI 0, 6
     ]
 
-    ints = HOI.uniteAll ints
+    ints = HOI.unite ints
     expect( ints ).to.have.length 1
     expect( ints[ 0 ].a ).to.be.equals 0
     expect( ints[ 0 ].b ).to.be.equals 6
 
+describe "HOInterval#gaps", ->
+  it "should convert to gaps #1", ->
+    ints = [
+      new HOI 1, 3
+      new HOI 2, 4
+      new HOI 3, 5
+    ]
+
+    ints = HOI.gaps ints
+    expect( ints ).to.have.length 0
+
+  it "should convert to gaps #2", ->
+    ints = [
+      new HOI 1, 3
+      new HOI 5, 7
+    ]
+
+    ints = HOI.gaps ints
+    expect( ints ).to.have.length 1
+    expect( ints[ 0 ].a ).to.be.equals 3
+    expect( ints[ 0 ].b ).to.be.equals 5

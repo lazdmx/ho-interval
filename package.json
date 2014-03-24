@@ -1,23 +1,24 @@
 {
-  "name"         : "ho-interval",
-  "description"  : "A half-open interval object",
-  "version"      : "0.0.3",
-  "author"       : "Dmitry Lazutkin <ldm.thread@gmail.com>",
-  "maintainer"   : "Dmitry Lazutkin <ldm.thread@gmail.com>",
-  "repository"   : {
-    "type" : "git",
-    "url"  : "https://github.com/lazutkin/ho-interval.git"
+  "name": "ho-interval",
+  "description": "A half-open interval object",
+  "version": "0.1.0",
+  "author": "Dmitry Lazutkin <ldm.thread@gmail.com>",
+  "maintainer": "Dmitry Lazutkin <ldm.thread@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lazutkin/ho-interval.git"
   },
   "scripts": {
-    "test" : "./node_modules/mocha/bin/mocha --compilers coffee:coffee-script --reporter spec tests/*"
+    "test": "./node_modules/mocha/bin/mocha --compilers coffee:coffee-script --reporter spec tests/*"
   },
-  "dependencies" : {
-    "coffee-script" : "*",
-    "underscore"    : "*"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "mocha" : "1.12.x",
-    "chai"  : "1.8.x"
+    "coffee-script": "*",
+    "mocha": "~1.18.2",
+    "chai": "~1.9.1",
+    "grunt": "~0.4.4",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-typescript": "~0.2.10",
+    "typescript": "~0.9.7"
   }
 }
-
