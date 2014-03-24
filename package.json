@@ -1,7 +1,7 @@
 {
   "name": "ho-interval",
   "description": "A half-open interval object",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Dmitry Lazutkin <ldm.thread@gmail.com>",
   "maintainer": "Dmitry Lazutkin <ldm.thread@gmail.com>",
   "repository": {
@@ -9,11 +9,11 @@
     "url": "https://github.com/lazutkin/ho-interval.git"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha --compilers coffee:coffee-script --reporter spec tests/*"
+    "test": "./node_modules/mocha/bin/mocha --compilers coffee:coffee-script/register --reporter spec tests/*"
   },
   "dependencies": {},
   "devDependencies": {
-    "coffee-script": "*",
+    "coffee-script": "~1.7.1",
     "mocha": "~1.18.2",
     "chai": "~1.9.1",
     "grunt": "~0.4.4",
