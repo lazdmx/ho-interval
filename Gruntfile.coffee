@@ -11,7 +11,6 @@ module.exports = ( grunt ) ->
         options:
           module : "commonjs"
           target : "es5"
-          declaration: yes
   }
 
   grunt.loadNpmTasks "grunt-contrib-clean"
