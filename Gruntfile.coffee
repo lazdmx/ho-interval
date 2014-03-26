@@ -16,7 +16,7 @@ module.exports = ( grunt ) ->
   grunt.loadNpmTasks "grunt-contrib-clean"
   grunt.loadNpmTasks "grunt-typescript"
 
-  grunt.registerTask "all", [
+  grunt.registerTask "build", [
     "clean"
     "typescript"
   ]

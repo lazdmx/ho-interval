@@ -21,24 +21,27 @@ function __unite(ints) {
 }
 
 var HOInterval = (function () {
-    function HOInterval(a, b) {
-        this.a = a;
-        this.b = b;
+    function HOInterval(x, b) {
+        if (typeof b === "undefined") { b = x; }
+        if (x instanceof HOInterval) {
+            this.a = x.a;
+            this.b = x.b;
+        } else {
+            this.a = x;
+            this.b = b;
+        }
     }
-    HOInterval.clone = function (int) {
-        return new HOInterval(int.a, int.b);
-    };
-
     HOInterval.length = function (int) {
         return int.b - int.a;
     };
 
     HOInterval.isValid = function (a, b) {
+        if (typeof b === "undefined") { b = a; }
         if (a instanceof HOInterval) {
             a = a.a;
             b = a.b;
         }
-        return a < b;
+        return a <= b;
     };
 
     HOInterval.unite = function () {
@@ -103,7 +106,7 @@ var HOInterval = (function () {
     };
 
     HOInterval.intersect = function (a, b) {
-        return HOInterval.clone(a).intersect(b);
+        return (new HOInterval(a)).intersect(b);
     };
 
     HOInterval.prototype.isCloseTo = function (other) {
@@ -115,12 +118,24 @@ var HOInterval = (function () {
     };
 
     HOInterval.prototype.isIntersect = function (x, y) {
+        if (typeof y === "undefined") { y = x; }
         if (x instanceof HOInterval) {
             y = x.b;
             x = x.a;
         }
 
-        return ((this.a <= x) && (x < this.b)) || ((x < this.a) && (this.a < y));
+        var a = this.a;
+        var b = this.b;
+
+        if ((a < b) && (x < y)) {
+            return ((a <= x) && (x < b)) || ((x < a) && (a < y));
+        } else if ((a < b) && (x == y)) {
+            return (a <= x) && (x < b);
+        } else if ((a == b) && (x < b)) {
+            return (x <= a) && (a < b);
+        } else if ((a == b) && (x == y)) {
+            return a == x;
+        }
     };
 
     HOInterval.prototype.unite = function (other) {
@@ -152,4 +167,5 @@ var HOInterval = (function () {
     };
     return HOInterval;
 })();
-exports.HOInterval = HOInterval;
+
+module.exports = HOInterval;

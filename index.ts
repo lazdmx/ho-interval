@@ -22,23 +22,19 @@ function __unite( ints: HOInterval[ ] ): number[ ] {
 } 
 
 
-export class HOInterval {
-  static clone( int: HOInterval ): HOInterval {
-    return new HOInterval( int.a, int.b )
-  }
-
+class HOInterval {
   static length( int: HOInterval ): number {
     return int.b - int.a
   }
 
   static isValid( int: HOInterval ): boolean
-  static isValid( a: number, b: number ): boolean
-  static isValid( a: any, b?: number ): boolean {
+  static isValid( a: number, b?: number ): boolean
+  static isValid( a: any, b: number = a ): boolean {
     if ( a instanceof HOInterval ) {
       a = a.a
       b = a.b
     }
-    return a < b
+    return a <= b
   }
 
   static unite( ints: HOInterval[ ] ): HOInterval[ ]
@@ -99,10 +95,24 @@ export class HOInterval {
   }
 
   static intersect( a: HOInterval, b: HOInterval ): HOInterval {
-    return HOInterval.clone( a ).intersect( b )
+    return ( new HOInterval( a ) ).intersect( b )
   }
 
-  constructor( public a: number, public b: number ) { }
+
+  public a: number
+  public b: number
+
+  constructor( other: HOInterval )
+  constructor( a: number, b: number )
+  constructor( x: any, b: number = x ) {
+    if ( x instanceof HOInterval ) {
+      this.a = x.a
+      this.b = x.b
+    } else {
+      this.a = x
+      this.b = b
+    }
+  }
 
   isCloseTo( other: HOInterval ): boolean {
     return ( this.b == other.a ) || ( this.a == other.b )
@@ -113,14 +123,28 @@ export class HOInterval {
   }
 
   isIntersect( other: HOInterval ): boolean
-  isIntersect( x: number, y: number ): boolean
-  isIntersect( x: any, y?: number ): boolean {
+  isIntersect( x: number, y?: number ): boolean
+  isIntersect( x: any, y: number = x ): boolean {
     if ( x instanceof HOInterval ) {
       y = ( <HOInterval> x ).b
       x = ( <HOInterval> x ).a
     }
 
-    return ( ( this.a <= x ) && ( x < this.b ) ) || ( ( x < this.a ) && ( this.a < y ) )
+    var a = this.a
+    var b = this.b
+
+    if ( ( a < b ) && ( x < y) ) {
+      return ( ( a <= x ) && ( x < b ) ) || ( ( x < a ) && ( a < y ) )
+
+    } else if ( ( a < b ) && ( x == y ) ) {
+      return ( a <= x ) && ( x < b )
+
+    } else if ( ( a == b ) && ( x < b) ) {
+      return ( x <= a ) && ( a < b ) 
+
+    }  else if ( ( a == b ) && ( x == y) ) {
+      return a == x
+    }
   }
 
   unite( other: HOInterval ): HOInterval {
@@ -151,3 +175,5 @@ export class HOInterval {
     return this
   }
 }
+
+export = HOInterval
