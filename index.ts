@@ -1,7 +1,7 @@
 
 function __unite( ints: HOInterval[ ] ): number[ ] {
   var result: number[ ] = [ ]
-    
+
   for ( var idx1 = 0; idx1 < ints.length; ++idx1 ) {
     if ( result.indexOf( idx1 ) === -1 ) {
       var x = ints[ idx1 ]
@@ -19,8 +19,11 @@ function __unite( ints: HOInterval[ ] ): number[ ] {
     }
   }
   return result
-} 
+}
 
+function sortNum(a: number, b: number){
+  return a - b
+}
 
 class HOInterval {
   static length( int: HOInterval ): number {
@@ -30,7 +33,7 @@ class HOInterval {
   static isValid( int: HOInterval ): boolean
   static isValid( a: number, b?: number ): boolean
   static isValid( a: any, b: number = a ): boolean {
-    if ( a instanceof HOInterval ) {
+    if ( a instanceof <any>HOInterval ) {
       a = a.a
       b = a.b
     }
@@ -40,7 +43,7 @@ class HOInterval {
   static unite( ints: HOInterval[ ] ): HOInterval[ ]
   static unite( ...input: any[ ] ): HOInterval[ ] {
     var ints: HOInterval[ ]
-    
+
     if ( input.length === 1 ) {
       ints = input[ 0 ]
     } else {
@@ -51,7 +54,7 @@ class HOInterval {
     var united
 
     while ( ( united = __unite( ints ) ) && united.length ) {
-      united.sort( ).reverse( )
+      united.sort(sortNum).reverse( )
       // Remove united intervals from input
       for ( var idx in united ) {
         ints.splice( united[ idx ], 1 )
@@ -105,7 +108,7 @@ class HOInterval {
   constructor( other: HOInterval )
   constructor( a: number, b: number )
   constructor( x: any, b: number = x ) {
-    if ( x instanceof HOInterval ) {
+    if ( x instanceof <any>HOInterval ) {
       this.a = x.a
       this.b = x.b
     } else {
@@ -125,7 +128,7 @@ class HOInterval {
   isIntersect( other: HOInterval ): boolean
   isIntersect( x: number, y?: number ): boolean
   isIntersect( x: any, y: number = x ): boolean {
-    if ( x instanceof HOInterval ) {
+    if ( x instanceof <any>HOInterval ) {
       y = ( <HOInterval> x ).b
       x = ( <HOInterval> x ).a
     }
@@ -140,7 +143,7 @@ class HOInterval {
       return ( a <= x ) && ( x < b )
 
     } else if ( ( a == b ) && ( x < b) ) {
-      return ( x <= a ) && ( a < b ) 
+      return ( x <= a ) && ( a < b )
 
     }  else if ( ( a == b ) && ( x == y) ) {
       return a == x
