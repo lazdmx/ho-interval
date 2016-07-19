@@ -1,4 +1,3 @@
-"use strict";
 function __unite(ints) {
     var result = [];
     for (var idx1 = 0; idx1 < ints.length; ++idx1) {
